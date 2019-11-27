@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+
+    // To debug API on VSCODE, debug using .NET Core Attach instead of .NET Core Launch.
+    // Run the debugger and Attach your process to API.dll
+
     [Route("api/[controller]")]
     [ApiController]
     public class ActivitiesController : ControllerBase
@@ -36,7 +40,12 @@ namespace API.Controllers
 
         [HttpPost]
         public async Task<ActionResult<Unit>> Create(Create.Command command)
-        {
+        {   
+            // Our [APIController] does check if ModelState has any errors
+
+            // if(!ModelState.IsValid){
+            //     return BadRequest(ModelState);
+            // }
             return await _mediator.Send(command);
         }
 
