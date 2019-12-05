@@ -7,6 +7,6 @@ namespace Domain
     {
         public string DisplayName { get; set; }
         // Added for many-to-many relationship
-        public ICollection<UserActivity> UserActivities{get;set;}
+        public virtual ICollection<UserActivity> UserActivities{get;set;}
     }
 }

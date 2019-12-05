@@ -35,7 +35,12 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContextPool<DataContext>(options =>
+            {
+                options.UseLazyLoadingProxies();
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -61,6 +66,15 @@ namespace API
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            // Authorization checker
+            services.AddAuthorization(options => options.AddPolicy("IsActivityHost", policy =>
+            {
+                policy.Requirements.Add(new IsHostRequirement());
+            }));
+
+            // Authorization handler
+            services.AddTransient<IAuthorizationHandler, IsHostRequirement.IsHostRequirementHandler>();
 
             // Our hashing key is secret. Located in API.csproj, inside PropertyGroup tags, 
             // Add <UserSecretsId> tag and define your hashing key. This way, your key will be in a better place.

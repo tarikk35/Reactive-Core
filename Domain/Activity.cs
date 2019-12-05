@@ -13,7 +13,8 @@ namespace Domain
         public string City { get; set; }
         public string Venue { get; set; }
         // many-to-many relationship
-        public ICollection<UserActivity> UserActivities { get; set; }
+        // for auto mapping, property must be virtual
+        public virtual ICollection<UserActivity> UserActivities { get; set; }
 
     }
 }
