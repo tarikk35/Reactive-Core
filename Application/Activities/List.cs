@@ -22,7 +22,7 @@ namespace Application.Activities
             private readonly DataContext _context;
             private readonly ILogger<List> _logger;
 
-            public Handler(DataContext context,ILogger<List> logger)
+            public Handler(DataContext context, ILogger<List> logger)
             {
                 _context = context;
                 _logger = logger;
@@ -42,7 +42,9 @@ namespace Application.Activities
                 // catch(Exception ex) when(ex is TaskCanceledException){
                 //     _logger.LogInformation("Task was cancelled");
                 // }
-                var activities = await _context.Activities.ToListAsync(cancellationToken);
+                var activities = await _context.Activities.
+                Include(x => x.UserActivities).
+                ThenInclude(x => x.AppUser).ToListAsync(cancellationToken);
 
                 return activities;
             }

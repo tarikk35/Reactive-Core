@@ -25,7 +25,7 @@ namespace Persistence
                         UserName="tommy",
                         Email="tom@test.com"
                     },
-                    new AppUser{
+                    new AppUser{ 
                         DisplayName="Ann",
                         UserName="annie",
                         Email="ann@test.com"
