@@ -3,6 +3,7 @@ using System.Text;
 using API.Middleware;
 using Application.Activities;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
@@ -44,6 +45,8 @@ namespace API
             });
             // MediatR needs only one handler's assembly to locate other handlers. (typeof helps)
             services.AddMediatR(typeof(List.Handler).Assembly);
+
+            services.AddAutoMapper(typeof(List.Handler));
             // FluentValidator needs only one validator's assembly.
             services.AddMvc(option =>
             {

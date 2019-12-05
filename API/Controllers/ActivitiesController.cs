@@ -19,14 +19,14 @@ namespace API.Controllers
 
         [HttpGet]
         // If user cancels the request or there's no user to take it, we can cancel it using cancellation token
-        public async Task<ActionResult<List<Activity>>> List(CancellationToken ct)
+        public async Task<ActionResult<List<ActivityDto>>> List(CancellationToken ct)
         {
             // GET the list from Application Layer using MediatR
             return await Mediator.Send(new List.Query(), ct);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Activity>> Details(Guid id)
+        public async Task<ActionResult<ActivityDto>> Details(Guid id)
         {
             return await Mediator.Send(new Details.Query { Id = id });
         }
