@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Activities;
@@ -38,7 +39,8 @@ namespace Application.Users
                     DisplayName = user.DisplayName,
                     Username = user.UserName,
                     Token = _jWTGenerator.CreateToken(user),
-                    Image = null
+                    Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+
                 };
             }
         }

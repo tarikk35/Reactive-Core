@@ -13,13 +13,15 @@ namespace Persistence
         // If using Code First approach, "Activities" will be the name of table
         public DbSet<Activity> Activities { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
+        // One-To-Many dont need any other setting.
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<UserActivity>(x => x.HasKey(ua => new { ua.AppUserId, ua.ActivityId }));
-            
+
             // One User can have many activities.
             builder.Entity<UserActivity>().HasOne(u => u.AppUser)
             .WithMany(a => a.UserActivities)
