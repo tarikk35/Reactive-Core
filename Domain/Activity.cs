@@ -15,6 +15,7 @@ namespace Domain
         // many-to-many relationship
         // for auto mapping, property must be virtual
         public virtual ICollection<UserActivity> UserActivities { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }
